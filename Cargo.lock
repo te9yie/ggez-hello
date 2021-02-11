@@ -679,6 +679,7 @@ name = "ggez-hello"
 version = "0.1.0"
 dependencies = [
  "ggez",
+ "glam",
 ]
 
 [[package]]
@@ -750,6 +751,16 @@ dependencies = [
  "khronos_api",
  "log",
  "xml-rs",
+]
+
+[[package]]
+name = "glam"
+version = "0.12.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2ad8819b352632f676098176a51e11e324e8cee4c2518dd67e58c36b848438e6"
+dependencies = [
+ "mint",
+ "version_check",
 ]
 
 [[package]]
