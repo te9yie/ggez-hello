@@ -1,7 +1,7 @@
 use ggez::{
     conf::{WindowMode, WindowSetup},
     event::{self, EventHandler},
-    graphics::{self, Text},
+    graphics::{self, Text, Image, DrawParam, spritebatch::SpriteBatch},
     Context, ContextBuilder, GameResult,
 };
 use glam::Vec2;
@@ -12,13 +12,16 @@ const SCREEN_SIZE: (f32, f32) = (16.0 * 40.0, 9.0 * 40.0);
 
 struct State {
     text: Text,
+    sprite: SpriteBatch,
 }
 
 impl State {
     fn new(ctx: &mut Context) -> GameResult<State> {
         let font = Font::new(ctx, "/mplus-1p-medium.ttf")?;
         let text = Text::new(("Hello", font, 48.0));
-        Ok(State { text })
+        let image = Image::new(ctx, "/kid_seikaku_kachiki_boy.png")?;
+        let sprite = SpriteBatch::new(image);
+        Ok(State { text, sprite })
     }
 }
 
@@ -29,7 +32,15 @@ impl EventHandler for State {
 
     fn draw(&mut self, ctx: &mut Context) -> GameResult {
         graphics::clear(ctx, [0.17, 0.17, 0.17, 1.0].into());
+
         graphics::draw(ctx, &self.text, (Vec2::new(20.0, 20.0),))?;
+
+        let p = DrawParam::new()
+            .dest(Vec2::new(80.0, 20.0));
+        self.sprite.add(p);
+        graphics::draw(ctx, &self.sprite, p)?;
+        self.sprite.clear();
+
         graphics::present(ctx)
     }
 }
